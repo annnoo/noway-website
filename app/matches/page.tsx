@@ -2,11 +2,7 @@ import { ServerMap } from "@/components/ServerMap";
 import { LiveGameCard } from "@/components/lol/LiveGameCard";
 import { MatchCard } from "@/components/lol/MatchCard";
 import { Account, RankCard } from "@/components/lol/RankCard";
-import FilterPanel from "@/components/lol/filter-panel";
-import { Card } from "@/components/ui/card";
-import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "@/components/ui/multi-select";
 import { exampleRawGame } from "@/lib/examples";
-import { Main } from "next/document";
 
 
 const exampleAccounts: Account[] = [
