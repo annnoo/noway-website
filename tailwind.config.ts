@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss"
+import colors from "tailwindcss/colors"
 
 const config = {
   darkMode: ["class"],
@@ -69,6 +70,8 @@ const config = {
         rus: '#6b7280',
         tr: '#14b8a6',
         tur: '#14b8a6',
+        blueteam: colors.blue[600],
+        redteam: colors.red[600],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -94,7 +97,10 @@ const config = {
   plugins: [require("tailwindcss-animate")],
   safelist: [
     {
-      pattern: /^(bg|text|border)-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr|bra|tur|kor|rus|la1|la2)$/,
+      pattern: /^(bg|text|border)-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr|bra|tur|kor|rus|la1|la2|blueteam|redteam)$/,
+    },
+    {
+      pattern: /^(bg|text|border)-l-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr|bra|tur|kor|rus|la1|la2|blueteam|redteam)$/,
     },
   ]
 } satisfies Config

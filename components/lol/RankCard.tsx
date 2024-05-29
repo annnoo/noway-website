@@ -42,11 +42,10 @@ import {
   Card,
   CardContent,
 } from "@/components/ui/card"
-import { Badge } from "../ui/badge";
 import Image from "next/image";
+import { RegionBadge } from "./RegionBadge";
 
 export const RankCard = ({ className, account, ...props }: RankCardProps) => {
-  const color = `bg-${account.region.toLowerCase()}`
   return (
     <Card className={cn("", className)} {...props}>
       <CardContent className="grid gap-4">
@@ -108,7 +107,7 @@ export const RankCard = ({ className, account, ...props }: RankCardProps) => {
         </div>
 
         <div className="flex flex-row items-start justify-between">
-          <Badge className={cn(color, "uppercase")}>{account.region}</Badge>
+          <RegionBadge region={account.region} />
 
           <div className="flex flex-row gap-2">
             {games.map((game, index) => {

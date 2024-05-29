@@ -49,7 +49,9 @@ export default function Home() {
 
     <main>
       <ServerMap />
-      <LiveGameCard game={exampleRawGame} />
+      <div className="mt-40">
+        <LiveGameCard game={exampleRawGame} />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 items-center">
 
         {exampleAccounts.map((account) => (

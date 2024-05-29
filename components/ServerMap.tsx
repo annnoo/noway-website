@@ -4,7 +4,6 @@ import filteredPoints from '../public/static/data/map.json'
 import { REGION_COLORS, Region } from '@/lib/regions';
 import { Popover, PopoverAnchor, PopoverContent, PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
-import { Card, CardContent } from './ui/card';
 
 import Image from "next/image";
 import { cn } from '@/lib/utils';
@@ -15,7 +14,7 @@ interface ServerMapRegionAccountMap {
 }
 
 interface ServerMapAccountProps {
-  accounts: ServerMapRegionAccountMap;
+  accounts?: ServerMapRegionAccountMap;
 }
 
 interface ServerMapAccountState {
