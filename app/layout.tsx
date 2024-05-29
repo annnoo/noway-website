@@ -16,10 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark flex min-h-screen w-full flex-col">
+    <html lang="en" className="dark flex min-h-screen w-full flex-col overflow-x-hidden">
 
       <body className={inter.className}>
-        <header className=" sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
+        <header className=" sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 z-10">
           <NavBar />
         </header>
 

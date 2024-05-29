@@ -36,36 +36,17 @@ const games = [{
 
 ]
 
-import { BellIcon, CheckIcon } from "@radix-ui/react-icons"
 
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card"
 import { Badge } from "../ui/badge";
 import Image from "next/image";
-import { REGION_COLORS, Region } from "@/lib/regions";
-
-const regionToColor: { [x: string]: string } = {
-  NA: "bg-blue-500",
-  EUW: "bg-green-500",
-  KR: "bg-red-500",
-}
-const champIcon = "https://static.wikia.nocookie.net/leagueoflegends/images/e/e7/Bel%27Veth_OriginalSquare.png/revision/latest/smart/width/250/height/250?cb=20220525195325"
-
-const champIcons = "https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/1.png";
 
 export const RankCard = ({ className, account, ...props }: RankCardProps) => {
-
-  const colorHex = REGION_COLORS[account.region as Region] ?? "bg-gray-500"
   const color = `bg-${account.region.toLowerCase()}`
-  console.log(color)
   return (
     <Card className={cn("", className)} {...props}>
       <CardContent className="grid gap-4">
@@ -134,8 +115,9 @@ export const RankCard = ({ className, account, ...props }: RankCardProps) => {
               const border = game.win ? "border-green-500" : "border-red-500"
               const classes = cn("w-8", "h-8", "rounded-full", "border-[2px]", border)
               const src = `/static/images/champion/${game.champ}.png`
+              const key = `${account.accountName}-${account.region}-${game.champ}-${index}`
               return (
-                <Image src={src} alt={game.champ} width={32} height={32} className={classes} key={game.champ} />
+                <Image src={src} alt={game.champ} width={32} height={32} className={classes} key={key} />
               )
             })}
           </div>

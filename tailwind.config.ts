@@ -55,14 +55,20 @@ const config = {
         euw: '#3b82f6',
         na: '#ef4444',
         kr: '#eab308',
+        kor: '#eab308',
         eune: '#f97316',
         br: '#22c55e',
+        bra: '#22c55e',
         jp: '#ffffff',
         lan: '#a855f7',
+        la1: '#a855f7',
         las: '#ec4899',
+        la2: '#ec4899',
         oce: '#06b6d4',
         ru: '#6b7280',
+        rus: '#6b7280',
         tr: '#14b8a6',
+        tur: '#14b8a6',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -88,7 +94,7 @@ const config = {
   plugins: [require("tailwindcss-animate")],
   safelist: [
     {
-      pattern: /^(bg|text|border)-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr)$/,
+      pattern: /^(bg|text|border)-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr|bra|tur|kor|rus|la1|la2)$/,
     },
   ]
 } satisfies Config
