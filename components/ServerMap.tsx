@@ -56,6 +56,7 @@ const exampleAccounts: ServerMapRegionAccountMap = {
 
 }
 
+const maxHeight = '500px'
 export const ServerMap = (props?: ServerMapAccountProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [selectedAccount, setSelectedAccount] = useState<ServerMapAccountState | null>(null)
@@ -78,11 +79,12 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
           }
         }}>
 
-          <TransformComponent contentClass='w-full h-full' contentStyle={{ width: '100%', height: '100%' }}
+          <TransformComponent contentClass='w-full h-full' contentStyle={{ width: '100%', height: '100%', maxHeight }}
             wrapperStyle={{
               width: "100%",
               height: "100%",
-              margin: '12px'
+              margin: '12px',
+              maxHeight
             }}
 
           >
@@ -96,6 +98,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
               style={{
                 width: "100%",
                 height: "100%",
+                maxHeight,
                 background: 'transparent',
               }}
             >
