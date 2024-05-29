@@ -135,7 +135,7 @@ export const RankCard = ({ className, account, ...props }: RankCardProps) => {
               const classes = cn("w-8", "h-8", "rounded-full", "border-[2px]", border)
               const src = `/static/images/champion/${game.champ}.png`
               return (
-                <Image src={src} alt={game.champ} width={32} height={32} className={classes} />
+                <Image src={src} alt={game.champ} width={32} height={32} className={classes} key={game.champ} />
               )
             })}
           </div>

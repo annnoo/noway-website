@@ -1,8 +1,6 @@
 "use client"
 import { Account, RankCard } from "@/components/lol/RankCard";
-import { Card } from "@/components/ui/card";
 import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "@/components/ui/multi-select";
-import { Main } from "next/document";
 import { useState } from "react";
 
 
