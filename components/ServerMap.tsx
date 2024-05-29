@@ -148,7 +148,7 @@ import { format } from 'date-fns';
 import { RegionBadge } from './lol/RegionBadge';
 import { RankCard } from './lol/RankCard';
 
-export const FallBackServerMapAccountCard = ({ region }: { region?: Region }) => {
+export const FallBackServerMapAccountCard = ({ region }: { region?: Region | null }) => {
 
 
   return (<div>
