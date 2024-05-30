@@ -17,7 +17,7 @@ interface ServerMapAccountProps {
   accounts?: ServerMapRegionAccountMap;
 }
 
-interface ServerMapAccountState {
+export interface ServerMapAccountState {
   accountName: string;
   region: string;
   rank: number;
@@ -71,7 +71,16 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
           className='bg-background border-solid w-96 max-w-96 p-8 rounded-lg shadow-lg z-10 border-black'
           style={{ zIndex: 999 }}
         >
-          {selectedAccount ? <ServerMapAccountCard account={selectedAccount as ServerMapAccountState} /> : <FallBackServerMapAccountCard region={selectedRegion} />} </PopoverContent>
+          {selectedAccount ?
+            (
+              <div>
+                <div className='text-center text-xl uppercase font-bold text-card-foreground'>
+                  Peak Ranking
+                </div>
+                <PeakAccountCard account={selectedAccount as ServerMapAccountState} />
+              </div>
+            )
+            : <FallBackServerMapAccountCard region={selectedRegion} />} </PopoverContent>
 
         <TransformWrapper centerOnInit={true} wheel={{ smoothStep: 0.0002 }} maxScale={2} onWheelStart={(ref, event) => {
           if (ref.state.scale <= 1 && event.deltaY > 0) {
@@ -105,8 +114,10 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
 
               {filteredPoints.map((point) => {
                 const color = REGION_COLORS[point?.data?.id as Region] ?? "green";
-                const opacity = point.data ? 1 : 0.25;
+                const opacity = point.data ? 1 : 0.10;
                 const cursor = point.data ? "pointer" : "default";
+                const strokeWidth = point.data ? 0.2 : 10.25;
+                const strokeColor = point.data?.id === 'EUW' ? 'gold' : 'transparent'
 
                 return (
                   <circle
@@ -128,7 +139,6 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                     fill={color}
                     style={{
                       cursor, opacity, margin: '12px', borderRadius: '50px',
-                      border: '10px solid #000'
                     }}
                   />
                 )
@@ -147,87 +157,15 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
 import { format } from 'date-fns';
 import { RegionBadge } from './lol/RegionBadge';
 import { RankCard } from './lol/RankCard';
+import { PeakAccountCard } from './lol/PeakRankAccountCard';
 
 export const FallBackServerMapAccountCard = ({ region }: { region?: Region | null }) => {
 
 
-  return (<div>
+  return (<div className='h-full flex flex-col justify-between'>
     <div className='text-center text-xl uppercase font-bold text-card-foreground'>
       No Account
     </div>
 
-    <RegionBadge region={region} />
   </div>)
-}
-
-export const ServerMapAccountCard = ({ account }: { account: ServerMapAccountState }) => {
-  const badgeColor = `bg-${account.region.toLowerCase()}`
-  const formattedDate = format(account.timestamp, 'dd.MM.yyyy HH:mm');
-  return (
-    <div>
-      <div className='text-center text-xl uppercase font-bold text-card-foreground'>
-        Peak Ranking
-      </div>
-      <div className=" mt-4 space-x-4 rounded-md">
-        <div className="flex-1 space-y-1">
-          <p className="text-xl font-medium leading-none">
-            {account.accountName}
-          </p>
-          <p className="text-sm text-muted-foreground">
-          </p>
-        </div>
-      </div>
-
-      <div
-        className="flex items-center p-3 text-xs text-black  border-solid border-zinc-900"
-      >
-        <div
-          className="text-black"
-        >
-
-          <Image
-            src={`/static/images/ranked/${account.tier.toLowerCase()}.png`}
-            alt={account.tier}
-            width={72}
-            height={72}
-            className="max-w-full align-middle p-2 border-0 bg-zinc-800 rounded-full list-outside"
-          />
-        </div>
-        <div className="relative flex-1 ml-4 text-black">
-          <div
-            className="font-sans text-lg  leading-6 text-white capitalize font-bold list-outside"
-          >
-            {account.tier} {account.rank > 0 && account.rank}
-          </div>
-          <div
-            className="mt-px font-sans text-md leading-4 text-gray-400 list-outside"
-          >
-            {account.lp}
-
-            LP
-          </div>
-        </div>
-        <div className="text-right text-gray-500" >
-          <div className="leading-6" >
-            {account.wins}W&nbsp;
-            {account.losses}L
-          </div>
-          <div className="mt-px leading-4">
-
-            Win Rate
-            &nbsp;
-
-            <span>
-              {Math.round((account.wins / (account.wins + account.losses)) * 100)}%
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex flex-row items-start justify-between">
-        <Badge className={cn(badgeColor, "uppercase")}>{account.region}</Badge>
-        <span className="text-muted-foreground text-xs">{formattedDate}</span>
-      </div>
-    </div >
-  );
 }

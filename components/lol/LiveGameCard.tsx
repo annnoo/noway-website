@@ -96,10 +96,10 @@ export function LiveGameTeamView({ team, color }: { team: { participants: Partic
       <Separator className="m-2 w-11/12" />
       <div className="flex flex-col gap-1">
         {team.participants.map((participant) => (
-          <>
-            <Participant key={participant.riotId} participant={participant} color={color} />
-            <Separator />
-          </>
+          <div key={participant.riotId}>
+            <Participant participant={participant} color={color} />
+            <Separator key={participant.riotId + "-seperator"} />
+          </div>
         ))}
       </div>
     </div>
@@ -138,8 +138,8 @@ export function Participant({ participant, color }: { participant: ParticipantLi
             height={32}
           />
           <div className="flex flex-col gap-1 mr-1">
-            <SpellIcon perkId={participant.spell1Id} />
-            <SpellIcon perkId={participant.spell2Id} />
+            <SpellIcon perkId={participant.spell1Id} key={participant.riotId + participant.spell1Id} />
+            <SpellIcon perkId={participant.spell2Id} key={participant.riotId} />
           </div>
 
           <div className="flex flex-col gap-1">
@@ -173,6 +173,7 @@ export function SpellIcon({ perkId }: { perkId: number }) {
       src={`/static/images/summs/${perkId}.png`}
       alt={perkId.toString()}
       width={16}
+
       className="rounded-md"
       height={16}
     />
