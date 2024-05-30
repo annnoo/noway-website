@@ -20,7 +20,7 @@ export function NavBar() {
       <NavigationMenuList>
 
         <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/matches">
+          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/">
             Accounts
           </NavigationMenuLink>
         </NavigationMenuItem>
