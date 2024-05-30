@@ -3,10 +3,12 @@
 import { ParticipantLiveGame, RawGame } from "@/lib/examples";
 import Image from "next/image";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge } from "../ui/badge";
 
-export function LiveGameCard({ game }: { game: RawGame }) {
+
+
+export function LiveGameCard({ game, region }: { game: RawGame, region?: string }) {
 
 
   const participants = game.participants;
@@ -16,6 +18,12 @@ export function LiveGameCard({ game }: { game: RawGame }) {
 
   const blueTeamBans = game.bannedChampions.filter((ban) => ban.teamId === 100);
   const redTeamBans = game.bannedChampions.filter((ban) => ban.teamId === 200);
+  // get gameLength by now minus gameStart 
+  const gameStart = game.gameStartTime;
+  const now = Date.now();
+
+
+  const gameLengthInSeconds = Math.floor((now - gameStart) / 1000);
   const redTeam = {
     participants: redTeamparticipants,
     bans: redTeamBans
@@ -26,7 +34,7 @@ export function LiveGameCard({ game }: { game: RawGame }) {
   }
 
 
-  const [timeSeconds, setTimeSeconds] = useState(game.gameLength);
+  const [timeSeconds, setTimeSeconds] = useState(gameLengthInSeconds);
   useEffect(() => {
     //Implementing the setInterval method
     const interval = setInterval(() => {
@@ -39,18 +47,22 @@ export function LiveGameCard({ game }: { game: RawGame }) {
 
   const minutes = Math.floor(timeSeconds / 60).toString().padStart(2, '0');
   const seconds = (timeSeconds % 60).toString().padStart(2, '0');
-  const server = 'NA'
+  const server = 'euw'
   return (
 
     <div>
       <Card>
         <CardHeader className="flex flex-row justify-between items-center">
           <h1><Badge className="bg-red-600 rounded-full hover:bg-red-600" color="bg-red-600"> <span className="bold animate-pulse ">LIVE</span> </Badge></h1>
-          <h1 className="ml-2 tabular-nums">Game Time: {minutes}:{seconds}</h1>
+          <div className="flex flex-row content-evenly">
+            <h1 className="mr-2 my-auto tabular-nums" suppressHydrationWarning>Game Time: {minutes}:{seconds}</h1>
+
+            <RegionBadge region={server} />
+          </div>
         </CardHeader>
         <CardContent>
           <div>
-            <LiveGameTeamsOverview redTeam={redTeam} blueTeam={blueTeam} />
+            <MemorizedLiveGameCard redTeam={redTeam} blueTeam={blueTeam} />
           </div>
 
         </CardContent>
@@ -67,6 +79,7 @@ export type LiveGameTeamsOverviewProps = {
 }
 import { Separator } from "../ui/separator"
 import { cn } from "@/lib/utils";
+import { RegionBadge } from "./RegionBadge";
 export function LiveGameTeamsOverview({ redTeam, blueTeam }: LiveGameTeamsOverviewProps) {
   return (
     <div>
@@ -105,6 +118,10 @@ export function LiveGameTeamView({ team, color }: { team: { participants: Partic
     </div>
 
   )
+}
+
+export function MemorizedLiveGameCard({ redTeam, blueTeam }: LiveGameTeamsOverviewProps) {
+  return useMemo(() => <LiveGameTeamsOverview redTeam={redTeam} blueTeam={blueTeam} />, [redTeam, blueTeam]);
 }
 
 

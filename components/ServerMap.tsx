@@ -2,14 +2,14 @@
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 import filteredPoints from '../public/static/data/map.json'
 import { REGION_COLORS, Region } from '@/lib/regions';
-import { Popover, PopoverAnchor, PopoverContent, PopoverPortal } from '@radix-ui/react-popover';
+import { Popover, PopoverAnchor, PopoverClose, PopoverContent, PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
 
 import Image from "next/image";
 import { cn } from '@/lib/utils';
 import { Badge } from './ui/badge';
 
-interface ServerMapRegionAccountMap {
+export interface ServerMapRegionAccountMap {
   [x: string]: ServerMapAccountState;
 }
 
@@ -71,6 +71,11 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
           className='bg-background border-solid w-96 max-w-96 p-8 rounded-lg shadow-lg z-10 border-black'
           style={{ zIndex: 999 }}
         >
+          <PopoverClose>
+            <Badge className='absolute top-3 right-4' onClick={() => {
+              setPopoverOpen(false)
+            }}>X</Badge>
+          </PopoverClose>
           {selectedAccount ?
             (
               <div>
@@ -101,7 +106,6 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
               display={"none"}
               viewBox="0 0 200 90"
               onClick={() => {
-                console.log("test")
                 setPopoverOpen(false)
               }}
               style={{
@@ -126,7 +130,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                       e.stopPropagation();
                       if (point.data) {
                         setPopoverOpen(true)
-                        setSelectedAccount(exampleAccounts[point.data.id as Region] ?? null)
+                        setSelectedAccount(props?.accounts?.[point.data.id as Region] ?? null)
                         setSelectedRegion(point.data.id as Region)
                       } else {
                         setPopoverOpen(false)
@@ -166,6 +170,10 @@ export const FallBackServerMapAccountCard = ({ region }: { region?: Region | nul
     <div className='text-center text-xl uppercase font-bold text-card-foreground'>
       No Account
     </div>
+    {region && (
+      <div className="flex flex-row items-start justify-between">
+        <RegionBadge region={region} />
+      </div>)}
 
   </div>)
 }

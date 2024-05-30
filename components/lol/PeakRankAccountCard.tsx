@@ -5,22 +5,21 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { formatTierRank, isTierApexTier, numberToRoman } from "@/lib/ranks";
 
-export const PeakAccountCard = ({ account }: { account: ServerMapAccountState }) => {
+export const PeakAccountCard = ({ account, hideTitle }: { account: ServerMapAccountState, hideTitle?: boolean }) => {
   const badgeColor = `bg-${account.region.toLowerCase()}`
   const formattedDate = format(account.timestamp, 'dd.MM.yyyy HH:mm');
   return (
     <div className='h-full'>
 
-      <div className=" mt-4 space-x-4 rounded-md">
-        <div className="flex-1 space-y-1">
-          <p className="text-xl font-medium leading-none">
-            {account.accountName}
-          </p>
-          <p className="text-sm text-muted-foreground">
-          </p>
+      {!hideTitle && (
+        <div className=" mt-4 space-x-4 rounded-md">
+          <div className="flex-1 space-y-1">
+            <p className="text-xl font-medium leading-none">
+              {account.accountName}
+            </p>
+          </div>
         </div>
-      </div>
-
+      )}
       <div
         className="flex items-center p-3 text-xs text-black  border-solid border-zinc-900"
       >

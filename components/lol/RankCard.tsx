@@ -1,4 +1,5 @@
 export interface Account {
+  accountTag?: string;
   accountName: string;
   region: string;
   rank: number;
@@ -12,9 +13,10 @@ export type RankCardProps = {
   className?: string;
   account: Account;
   peak?: ServerMapAccountState;
+  games?: { champ: string, win: boolean }[]
 };
 
-const games = [{
+const exampleGames = [{
   champ: 'Aatrox',
   win: true,
 },
@@ -51,7 +53,7 @@ import { Region } from "@/lib/regions";
 import { PeakAccountCard } from "./PeakRankAccountCard";
 import { formatTierRank } from "@/lib/ranks";
 
-export const RankCard = ({ className, peak, account, ...props }: RankCardProps) => {
+export const RankCard = ({ className, peak, account, games, ...props }: RankCardProps) => {
   return (
     <Card className={cn("", className, "h-full")} {...props}>
       <CardContent className="grid gap-4">
@@ -59,7 +61,7 @@ export const RankCard = ({ className, peak, account, ...props }: RankCardProps) 
           <div className="flex-1 flex flex-row justify-between">
             <span className="text-xl font-medium leading-none">
               {account.accountName}
-              <span className="text-secondary text-sm ml-2">#T06</span>
+              <span className="text-secondary text-sm ml-2">#{account.accountTag}</span>
             </span>
             <span className="m">
               <RegionBadge region={account.region} />
@@ -126,7 +128,7 @@ export const RankCard = ({ className, peak, account, ...props }: RankCardProps) 
               <div></div>
 
               <div className="flex flex-row gap-2">
-                {games.map((game, index) => {
+                {games?.map((game, index) => {
                   const border = game.win ? "border-green-500" : "border-red-500"
                   const classes = cn("w-7", "h-7", "rounded-full", "border-[2px]", border)
                   const src = `/static/images/champion/${game.champ}.png`
@@ -140,7 +142,7 @@ export const RankCard = ({ className, peak, account, ...props }: RankCardProps) 
           </TabsContent>
           <TabsContent value="peak" className="h-full">
 
-            {peak ? <PeakAccountCard account={peak as ServerMapAccountState} /> : <FallBackServerMapAccountCard region={account.region as Region} />}
+            {peak ? <PeakAccountCard account={peak as ServerMapAccountState} hideTitle /> : <FallBackServerMapAccountCard region={account.region as Region} />}
 
 
           </TabsContent>
