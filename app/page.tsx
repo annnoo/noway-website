@@ -1,7 +1,9 @@
 import { ServerMap } from "@/components/ServerMap";
+import { ExpandableContainer } from "@/components/animated-collapsible";
 import { LiveGameCard } from "@/components/lol/LiveGameCard";
-import { MatchCard } from "@/components/lol/MatchCard";
 import { Account, RankCard, RankCardProps } from "@/components/lol/RankCard";
+import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { exampleRawGame } from "@/lib/examples";
 
 
@@ -78,8 +80,15 @@ export default function Home() {
     <main className="mx-8 md:mx-12 lg:mx-20 xl:mx-32">
       <ServerMap />
       <div className="my-8">
-        <h2 className="text-3xl font-semibold mb-4">Live Game</h2>
-        <LiveGameCard game={exampleRawGame} />
+
+        <ExpandableContainer defaultOpen={true} title={(
+
+          <div className="flex flex-row justify-center align-middle">
+            <h2 className="text-3xl font-semibold">Live Game</h2>
+            <Badge className=" ml-4 bg-red-600 rounded-full hover:bg-red-600 my-auto" color="bg-red-600"> <span className="bold animate-pulse ">LIVE</span> </Badge>
+          </div>
+
+        )}> <LiveGameCard game={exampleRawGame} /> </ExpandableContainer>
       </div>
       <div>
         <h2 className="text-3xl font-semibold">Accounts</h2>
