@@ -4,6 +4,7 @@ import { LiveGameCard } from "@/components/lol/LiveGameCard";
 import { PeakAccountCard } from "@/components/lol/PeakAccountCard";
 import { PeakAccountCardContent } from "@/components/lol/PeakRankAccountCard";
 import { RankCard, RankCardProps } from "@/components/lol/RankCard";
+import { MapRankLegend, MemoMapRankLegend } from "@/components/lol/map/MapRankLegend";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { compareAccountsByLp } from "@/lib/ranks";
@@ -44,6 +45,7 @@ export default async function Home() {
 
     <main className="mx-8 md:mx-12 lg:mx-20 xl:mx-32">
       <ServerMap accounts={peaks} />
+      <MemoMapRankLegend />
       <div className="my-8">
 
         {livegame && (
