@@ -50,7 +50,7 @@ import { RegionBadge } from "./RegionBadge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { FallBackServerMapAccountCard, ServerMapAccountState } from "../ServerMap";
 import { Region } from "@/lib/regions";
-import { PeakAccountCard } from "./PeakRankAccountCard";
+import { PeakAccountCardContent } from "./PeakRankAccountCard";
 import { formatTierRank } from "@/lib/ranks";
 
 export const RankCard = ({ className, peak, account, games, ...props }: RankCardProps) => {
@@ -59,7 +59,7 @@ export const RankCard = ({ className, peak, account, games, ...props }: RankCard
       <CardContent className="grid gap-4">
         <div className=" mt-4 space-x-4 rounded-md">
           <div className="flex-1 flex flex-row justify-between">
-            <span className="text-xl font-medium leading-none">
+            <span className="text-xl font-bold leading-none">
               {account.accountName}
               <span className="text-secondary text-sm ml-2">#{account.accountTag}</span>
             </span>
@@ -124,8 +124,7 @@ export const RankCard = ({ className, peak, account, games, ...props }: RankCard
               </div>
             </div>
 
-            <div className="flex flex-row items-start justify-between">
-              <div></div>
+            <div className="flex flex-row-reverse items-start justify-between">
 
               <div className="flex flex-row gap-2">
                 {games?.map((game, index) => {
@@ -142,7 +141,7 @@ export const RankCard = ({ className, peak, account, games, ...props }: RankCard
           </TabsContent>
           <TabsContent value="peak" className="h-full">
 
-            {peak ? <PeakAccountCard account={peak as ServerMapAccountState} hideTitle /> : <FallBackServerMapAccountCard region={account.region as Region} />}
+            {peak ? <PeakAccountCardContent account={peak as ServerMapAccountState} hideTitle /> : <FallBackServerMapAccountCard region={account.region as Region} />}
 
 
           </TabsContent>

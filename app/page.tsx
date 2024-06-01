@@ -1,103 +1,14 @@
-import { ServerMap, ServerMapRegionAccountMap } from "@/components/ServerMap";
+import { ServerMap, ServerMapAccountState, ServerMapRegionAccountMap } from "@/components/ServerMap";
 import { ExpandableContainer } from "@/components/animated-collapsible";
 import { LiveGameCard } from "@/components/lol/LiveGameCard";
-import { Account, RankCard, RankCardProps } from "@/components/lol/RankCard";
+import { PeakAccountCard } from "@/components/lol/PeakAccountCard";
+import { PeakAccountCardContent } from "@/components/lol/PeakRankAccountCard";
+import { RankCard, RankCardProps } from "@/components/lol/RankCard";
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { exampleRawGame } from "@/lib/examples";
-
-
-const exampleAccounts: Account[] = [
-  {
-    tier: "Grandmaster",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    rank: 1,
-    region: 'NA',
-    accountName: 'Noway4u'
-  },
-  {
-    tier: "Diamond",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    rank: 1,
-    region: 'NA',
-    accountName: 'Noway4u'
-  },
-  {
-    tier: "Gold",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    rank: 1,
-    region: 'EUW',
-    accountName: 'Kitty'
-  },
-  {
-    tier: "Silver",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    rank: 1,
-    region: 'KR',
-    accountName: 'Faker'
-  }
-];
-
-const rankCardExample: RankCardProps[] = [
-  {
-    account: exampleAccounts[0],
-    peak: undefined,
-
-  },
-  {
-    account: exampleAccounts[1],
-    peak: {
-      tier: "Challenger",
-      lp: 100,
-      wins: 100,
-      losses: 100,
-      rank: 1,
-      region: 'NA',
-      accountName: 'Noway4u',
-      timestamp: new Date()
-    },
-    games: [{
-      champ: 'Aatrox',
-      win: true,
-    },
-    {
-      champ: 'Aatrox',
-      win: false
-    },
-    {
-      champ: 'Annie',
-      win: false
-    },
-    {
-      champ: 'Annie',
-      win: true,
-    },
-    {
-      champ: 'Annie',
-      win: false
-    }]
-
-  },
-  {
-    account: exampleAccounts[2],
-    peak: undefined
-  },
-  {
-    account: exampleAccounts[3],
-    peak: undefined
-  }
-]
+import { Card } from "@/components/ui/card";
+import { compareAccountsByLp } from "@/lib/ranks";
 
 export default async function Home() {
-
   const url = process.env.BACKEND_API_URL + '/live';
   const accountUrl = process.env.BACKEND_API_URL + '/accounts/card';
   const regionsPeakUrl = process.env.BACKEND_API_URL + '/regions/peaks';
@@ -109,6 +20,8 @@ export default async function Home() {
     console.log(err)
     return []
   }) as RankCardProps[];
+
+
   const peaks = await fetch(regionsPeakUrl, { next: { revalidate: 120 } }).then(res => res.json()).catch(err => {
     console.log(err)
     return []
@@ -118,9 +31,14 @@ export default async function Home() {
       result[peak.region] = peak;
     })
     return result
-
   }
   );
+  const peakValues = Object.values(peaks).sort((a, b) => {
+    return compareAccountsByLp(a, b)
+  })
+
+
+
 
   return (
 
@@ -139,13 +57,17 @@ export default async function Home() {
           )}> <LiveGameCard game={livegame.game} region={livegame.region} /> </ExpandableContainer>)}
       </div>
       <div>
-        <h2 className="text-3xl font-semibold">Accounts</h2>
-        <div className="my-8 h-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 items-center gap-y-3">
+        <h2 className="text-3xl font-semibold">Noway Around the World!</h2>
+        <div className="my-8 h-full grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 items-center gap-3">
+          {peakValues.map((peak) => {
+            const newPeak = peak as any;
+            const account = accounts.find((a) => a.account.region === peak.region && a.account.accountName === peak.accountName);
+            newPeak.accountTag = account?.account.accountTag;
 
-          {accounts.map((account) => (
-            <RankCard key={account.account.accountName + account.account.region} account={account.account} peak={account.peak} games={account.games} className="m-3" />
-          ))}
-
+            return (
+              <PeakAccountCard account={newPeak} key={`peakaccountcard-${peak}`} lastGames={account?.games}></PeakAccountCard>
+            )
+          })}
         </div>
       </div>
       {/* <MatchCard /> */}

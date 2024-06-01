@@ -21,6 +21,11 @@ export function NavBar() {
 
         <NavigationMenuItem>
           <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/">
+            World Map
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/accounts">
             Accounts
           </NavigationMenuLink>
         </NavigationMenuItem>

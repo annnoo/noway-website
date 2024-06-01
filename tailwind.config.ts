@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss"
 import colors from "tailwindcss/colors"
 
+const tierNames =
+  ['lol-dia', 'lol-grandmaster', 'lol-master', 'lol-challenger']
+
 const config = {
   darkMode: ["class"],
   content: [
@@ -72,6 +75,10 @@ const config = {
         tur: '#14b8a6',
         blueteam: colors.blue[600],
         redteam: colors.red[600],
+        'lol-dia': colors.indigo[600],
+        'lol-master': colors.purple[600],
+        'lol-grandmaster': colors.red[600],
+        'lol-challenger': colors.sky[600],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -111,6 +118,10 @@ const config = {
     },
     {
       pattern: /^(bg|text|border)-l-(euw|na|kr|eune|br|jp|lan|las|oce|ru|tr|bra|tur|kor|rus|la1|la2|blueteam|redteam)$/,
+    },
+
+    {
+      pattern: /^(bg|text|border)-(lol-dia|lol-master|lol-challenger|lol-grandmaster)$/,
     },
   ]
 } satisfies Config

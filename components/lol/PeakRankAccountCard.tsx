@@ -4,9 +4,11 @@ import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { formatTierRank, isTierApexTier, numberToRoman } from "@/lib/ranks";
+import { RegionBadge } from "./RegionBadge";
 
-export const PeakAccountCard = ({ account, hideTitle }: { account: ServerMapAccountState, hideTitle?: boolean }) => {
-  const badgeColor = `bg-${account.region.toLowerCase()}`
+
+
+export const PeakAccountCardContent = ({ account, hideTitle, games = [] }: { account: ServerMapAccountState & { accountTag?: string }, hideTitle?: boolean, games?: GameWinChampion[] }) => {
   const formattedDate = format(account.timestamp, 'dd.MM.yyyy HH:mm');
   return (
     <div className='h-full'>
@@ -14,8 +16,9 @@ export const PeakAccountCard = ({ account, hideTitle }: { account: ServerMapAcco
       {!hideTitle && (
         <div className=" mt-4 space-x-4 rounded-md">
           <div className="flex-1 space-y-1">
-            <p className="text-xl font-medium leading-none">
+            <p className="text-xl font-bold leading-none">
               {account.accountName}
+              <span className="text-secondary text-sm ml-2">#{account.accountTag}</span>
             </p>
           </div>
         </div>
@@ -70,7 +73,7 @@ export const PeakAccountCard = ({ account, hideTitle }: { account: ServerMapAcco
       </div>
 
       <div className="flex flex-row items-start justify-between">
-        <Badge className={cn(badgeColor, "uppercase")}>{account.region}</Badge>
+        <RegionBadge region={account.region} longName />
         <span className="text-muted-foreground text-xs">{formattedDate}</span>
       </div>
     </div >

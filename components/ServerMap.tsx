@@ -5,8 +5,6 @@ import { REGION_COLORS, Region } from '@/lib/regions';
 import { Popover, PopoverAnchor, PopoverClose, PopoverContent, PopoverPortal } from '@radix-ui/react-popover';
 import { useState } from 'react';
 
-import Image from "next/image";
-import { cn } from '@/lib/utils';
 import { Badge } from './ui/badge';
 
 export interface ServerMapRegionAccountMap {
@@ -27,33 +25,6 @@ export interface ServerMapAccountState {
   losses: number;
   timestamp: Date;
   isIngame?: boolean;
-}
-
-
-
-const exampleAccounts: ServerMapRegionAccountMap = {
-  [Region.EUW]: {
-    accountName: 'Kitty',
-    region: 'EUW',
-    rank: 1,
-    tier: "Gold",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    timestamp: new Date(),
-    isIngame: true
-  },
-  [Region.NA]: {
-    accountName: 'Noway4u',
-    region: 'NA',
-    rank: 1,
-    tier: "Diamond",
-    lp: 100,
-    wins: 100,
-    losses: 100,
-    timestamp: new Date()
-  },
-
 }
 
 const maxHeight = '500px'
@@ -82,7 +53,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                 <div className='text-center text-xl uppercase font-bold text-card-foreground'>
                   Peak Ranking
                 </div>
-                <PeakAccountCard account={selectedAccount as ServerMapAccountState} />
+                <PeakAccountCardContent account={selectedAccount as ServerMapAccountState} />
               </div>
             )
             : <FallBackServerMapAccountCard region={selectedRegion} />} </PopoverContent>
@@ -117,11 +88,11 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
             >
 
               {filteredPoints.map((point) => {
-                const color = REGION_COLORS[point?.data?.id as Region] ?? "green";
-                const opacity = point.data ? 1 : 0.10;
+                // const color = REGION_COLORS[point?.data?.id as Region] ?? "gray";
+                const rankForRegion = props?.accounts?.[point?.data?.id as Region]
+                const color = TIER_COLOR_TO_HEX_MAP[rankForRegion?.tier.toUpperCase() as string] ?? '#222'
+                const opacity = rankForRegion ? 1 : 1;
                 const cursor = point.data ? "pointer" : "default";
-                const strokeWidth = point.data ? 0.2 : 10.25;
-                const strokeColor = point.data?.id === 'EUW' ? 'gold' : 'transparent'
 
                 return (
                   <circle
@@ -161,7 +132,8 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
 import { format } from 'date-fns';
 import { RegionBadge } from './lol/RegionBadge';
 import { RankCard } from './lol/RankCard';
-import { PeakAccountCard } from './lol/PeakRankAccountCard';
+import { PeakAccountCardContent } from './lol/PeakRankAccountCard';
+import { TIER_COLOR_MAP_TW_COLORS, TIER_COLOR_TO_HEX_MAP } from '@/lib/ranks';
 
 export const FallBackServerMapAccountCard = ({ region }: { region?: Region | null }) => {
 

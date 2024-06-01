@@ -34,5 +34,28 @@ export const REGION_COLORS = {
   'EUN': colors.orange[500],
   'TUR': colors.teal[500],
   'JPN': colors.white,
+  'CHN': colors.fuchsia[500],
 }
-console.log(REGION_COLORS)
+
+export const REGION_NAMES: { [key: string]: string } = {
+  'EUW': 'Europe West',
+  'NA': 'North America',
+  'KR': 'Korea',
+  'EUNE': 'Europe Nordic & East',
+  'BR': 'Brazil',
+  'JP': 'Japan',
+  'LAN': 'Latin America North',
+  'LAS': 'Latin America South',
+  'OCE': 'Oceania',
+  'RU': 'Russia',
+  'TR': 'Turkey',
+  'KOR': 'Korea',
+  'LA1': 'Latin America North',
+  'LA2': 'Latin America South',
+  'RUS': 'Russia',
+  'EUN': 'Europe Nordic & East',
+  'TUR': 'Turkey',
+  'JPN': 'Japan'
+};
+
+
