@@ -17,6 +17,7 @@ export default async function Home() {
     console.log(err)
     return null
   });
+  console.log(livegame)
   const accounts = await fetch(accountUrl, { next: { revalidate: 120 } }).then(res => res.json()).catch(err => {
     console.log(err)
     return []

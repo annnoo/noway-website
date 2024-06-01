@@ -47,7 +47,7 @@ export function LiveGameCard({ game, region }: { game: RawGame, region?: string 
 
   const minutes = Math.floor(timeSeconds / 60).toString().padStart(2, '0');
   const seconds = (timeSeconds % 60).toString().padStart(2, '0');
-  const server = 'euw'
+
   return (
 
     <div>
@@ -57,7 +57,7 @@ export function LiveGameCard({ game, region }: { game: RawGame, region?: string 
           <div className="flex flex-row content-evenly">
             <h1 className="mr-2 my-auto tabular-nums" suppressHydrationWarning>Game Time: {minutes}:{seconds}</h1>
 
-            <RegionBadge region={server} />
+            <RegionBadge region={region} longName />
           </div>
         </CardHeader>
         <CardContent>
