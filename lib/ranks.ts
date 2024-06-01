@@ -59,8 +59,8 @@ const TIER_VALUES: { [key: string]: number } = {
   'EMERALD': 2000,
   'DIAMOND': 2400,
   'MASTER': 2800,
-  'GRANDMASTER': 2800,  // Masters and above share the same base value for calculation
-  'CHALLENGER': 2800    // Masters and above share the same base value for calculation
+  'GRANDMASTER': 3800,  // Masters and above share the same base value for calculation
+  'CHALLENGER': 4800    // Masters and above share the same base value for calculation
 };
 
 const RANK_VALUES: { [key: number]: number } = {

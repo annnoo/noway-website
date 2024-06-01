@@ -58,4 +58,48 @@ export const REGION_NAMES: { [key: string]: string } = {
   'JPN': 'Japan'
 };
 
+export const convertErrorsInRegionToActualRegionForMap = (region: string): Region => {
+  switch (region.toUpperCase()) {
+    case "BR1":
+    case "BRA":
+    case "BRAZIL":
+      return Region.BR;
+    case "EUN1":
+    case "EUNE":
+    case "EUN":
+      return Region.EUNE;
+    case "EUW1":
+    case "EUW":
+      return Region.EUW;
+    case "JP1":
+    case "JP":
+    case "JAP":
+      return Region.JP;
+    case "KR":
+    case "KR1":
+    case "KOR":
+      return Region.KR;
+    case "LA1":
+    case "LAN":
+      return Region.LAN;
+    case "LA2":
+    case "LAS":
+      return Region.LAS;
+    case "NA1":
+      return Region.NA;
+    case "OC1":
+    case "OCE":
+    case "OCE1":
+      return Region.OCE;
+    case "RU":
+    case "RUS":
+      return Region.RU;
+    case "TR1":
+    case "TRK":
+    case "TUR":
+      return Region.TR;
+    default:
+      return region as Region
+  }
+}
 
