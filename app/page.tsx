@@ -13,18 +13,17 @@ export default async function Home() {
   const url = process.env.BACKEND_API_URL + '/live';
   const accountUrl = process.env.BACKEND_API_URL + '/accounts/card';
   const regionsPeakUrl = process.env.BACKEND_API_URL + '/regions/peaks';
-  const livegame = await fetch(url, { next: { revalidate: 120 } }).then(res => res.json()).catch(err => {
+  const livegame = await fetch(url, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
     console.log(err)
     return null
   });
-  console.log(livegame)
-  const accounts = await fetch(accountUrl, { next: { revalidate: 120 } }).then(res => res.json()).catch(err => {
+  const accounts = await fetch(accountUrl, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
     console.log(err)
     return []
   }) as RankCardProps[];
 
 
-  const peaks = await fetch(regionsPeakUrl, { next: { revalidate: 120 } }).then(res => res.json()).catch(err => {
+  const peaks = await fetch(regionsPeakUrl, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
     console.log(err)
     return []
   }).then(res => {
