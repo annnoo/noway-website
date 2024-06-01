@@ -13,17 +13,20 @@ export default async function Home() {
   const url = process.env.BACKEND_API_URL + '/live';
   const accountUrl = process.env.BACKEND_API_URL + '/accounts/card';
   const regionsPeakUrl = process.env.BACKEND_API_URL + '/regions/peaks';
-  const livegame = await fetch(url, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
+
+  const livegamereq = fetch(url, { next: { revalidate: 10 } }).then(res => res.json()).catch(err => {
     console.log(err)
     return null
   });
-  const accounts = await fetch(accountUrl, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
+
+  const accountsreq = fetch(accountUrl, { next: { revalidate: 60 } }).then(res => res.json()).catch(err => {
     console.log(err)
     return []
-  }) as RankCardProps[];
+  }) as Promise<RankCardProps[]>
 
 
-  const peaks = await fetch(regionsPeakUrl, { cache: 'no-cache' }).then(res => res.json()).catch(err => {
+
+  const peaksreq = fetch(regionsPeakUrl, { next: { revalidate: 60 } }).then(res => res.json()).catch(err => {
     console.log(err)
     return []
   }).then(res => {
@@ -34,11 +37,13 @@ export default async function Home() {
     return result
   }
   );
+
+
+  const [livegame, accounts, peaks] = await Promise.all([livegamereq, accountsreq, peaksreq]);
+
   const peakValues = Object.values(peaks).sort((a, b) => {
     return compareAccountsByLp(a, b)
   })
-
-
 
 
   return (
