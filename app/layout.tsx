@@ -39,6 +39,25 @@ export default function RootLayout({
 
           }
         </div>
+        <footer className="text-center text-xs">
+          <div className="flex flex-col gap-4">
+            <div className="z-10 flex flex-col gap-2 text-xs font-light">
+              <div className="flex padding-4 flex-row justify-center gap-4 text-xs font-light">
+                <a href="https://www.twitch.tv/noway4u_sir">
+                  <span>Imprint</span>
+                </a>
+                <a href="https://noway.gg/privacy">
+                  <span>Privacy</span>
+                </a>
+              </div>
+
+              <div className="text-[12px]">
+                Made with <span className="text-red-500">❤</span> by
+                <a href="https://twitter.com/annnoo96"> Annnoo </a>
+              </div>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

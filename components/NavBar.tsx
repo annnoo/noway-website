@@ -13,12 +13,20 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import { calgary } from "@/lib/fonts"
+
+const calg2ary = calgary;
 
 export function NavBar() {
   return (
     <NavigationMenu className="bg-background ">
       <NavigationMenuList>
 
+        <NavigationMenuItem className="mt-0">
+          <NavigationMenuLink className={cn(calg2ary.className, navigationMenuTriggerStyle(), "text-2xl", "line-clamp-none", "m-auto", "font-bold", "leading-none")} href="https://noway.gg">
+            Noway4U
+          </NavigationMenuLink>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink className={navigationMenuTriggerStyle()} href="/">
             World Map

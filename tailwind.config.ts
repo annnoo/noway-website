@@ -22,6 +22,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        calgary: ['var(--font-calgary)'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
