@@ -11,7 +11,7 @@ import { Badge } from "../ui/badge";
 export function LiveGameCard({ game, region }: { game: RawGame, region?: string }) {
 
 
-  const participants = game.participants;
+  const participants = game.participants ?? [];
 
   const blueTeamParticipants = participants.filter((participant) => participant.teamId === 100);
   const redTeamparticipants = participants.filter((participant) => participant.teamId === 200);
