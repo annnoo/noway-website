@@ -32,6 +32,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [selectedAccount, setSelectedAccount] = useState<ServerMapAccountState | null>(null)
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null)
+  console.log(props)
 
   return (
     <div className="">
@@ -59,7 +60,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
             : <FallBackServerMapAccountCard region={selectedRegion} />} </PopoverContent>
 
         <TransformWrapper centerOnInit={true} wheel={{ smoothStep: 0.0002 }} maxScale={2} onWheelStart={(ref, event) => {
-          if (ref.state.scale <= 1 && event.deltaY > 0) {
+          if (ref.state.scale <= 1 && event.deltaY > 50) {
             scrollBy(0, event.deltaY / 1)
           }
         }}>
@@ -88,11 +89,13 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
             >
 
               {filteredPoints.map((point) => {
-                // const color = REGION_COLORS[point?.data?.id as Region] ?? "gray";
+                const color = REGION_COLORS[point?.data?.id as Region] ?? "gray";
                 const rankForRegion = props?.accounts?.[point?.data?.id as Region]
-                const color = TIER_COLOR_TO_HEX_MAP[rankForRegion?.tier.toUpperCase() as string] ?? '#222'
-                const opacity = rankForRegion ? 1 : 1;
+                // const color = TIER_COLOR_TO_HEX_MAP[rankForRegion?.tier.toUpperCase() as string] ?? '#222'
+                const opacity = rankForRegion ? 1 : 0.75;
                 const cursor = point.data ? "pointer" : "default";
+
+                const radius = RADIUS_BY_RANK[rankForRegion?.tier?.toUpperCase() as string] ?? 0.28
 
                 return (
                   <circle
@@ -110,7 +113,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                     className="btn-cta"
                     cx={point.x}
                     cy={point.y}
-                    r={0.35}
+                    r={radius}
                     fill={color}
                     style={{
                       cursor, opacity, margin: '12px', borderRadius: '50px',
@@ -128,6 +131,11 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
   )
 }
 
+const RADIUS_BY_RANK: { [x: string]: number } = {
+  'CHALLENGER': 0.45,
+  'GRANDMASTER': 0.40,
+  'MASTER': 0.4,
+}
 
 import { format } from 'date-fns';
 import { RegionBadge } from './lol/RegionBadge';
