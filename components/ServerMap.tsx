@@ -33,6 +33,13 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
   const [selectedAccount, setSelectedAccount] = useState<ServerMapAccountState | null>(null)
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null)
 
+  const regions = Object.values(Region ?? {})
+  const onOverlayClick = (e: any, region: string) => {
+    e.stopPropagation();
+    setPopoverOpen(true)
+    setSelectedAccount(props?.accounts?.[region] ?? null)
+    setSelectedRegion(region as Region)
+  }
   return (
     <div className="">
       <Popover open={popoverOpen}>
@@ -76,6 +83,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
             <svg
               display={"none"}
               viewBox="0 0 200 90"
+              z={0}
               onClick={() => {
                 setPopoverOpen(false)
               }}
@@ -91,29 +99,33 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                 const color = REGION_COLORS[point?.data?.id as Region] ?? "gray";
                 const rankForRegion = props?.accounts?.[point?.data?.id as Region]
                 // const color = TIER_COLOR_TO_HEX_MAP[rankForRegion?.tier.toUpperCase() as string] ?? '#222'
-                const opacity = rankForRegion ? 1 : 0.75;
+                const opacity = rankForRegion ? 1 : 1;
                 const cursor = point.data ? "pointer" : "default";
 
-                const radius = RADIUS_BY_RANK[rankForRegion?.tier?.toUpperCase() as string] ?? 0.28
+                const radius = RADIUS_BY_RANK[rankForRegion?.tier?.toUpperCase() as string] ?? 0.18
 
                 return (
                   <circle
                     key={point.x + '===' + point.y}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (point.data) {
-                        setPopoverOpen(true)
-                        setSelectedAccount(props?.accounts?.[point.data.id as Region] ?? null)
-                        setSelectedRegion(point.data.id as Region)
-                      } else {
-                        setPopoverOpen(false)
-                      }
-                    }}
-                    className="btn-cta"
+                    // onClick={(e) => {
+                    //   e.stopPropagation();
+                    //   if (point.data) {
+                    //     setPopoverOpen(true)
+                    //     setSelectedAccount(props?.accounts?.[point.data.id as Region] ?? null)
+                    //     setSelectedRegion(point.data.id as Region)
+                    //   } else {
+                    //     setPopoverOpen(false)
+                    //   }
+                    // }}
+                    // className="btn-cta"
                     cx={point.x}
                     cy={point.y}
+                    z={1}
                     r={radius}
                     fill={color}
+                    stroke="gold"
+                    strokeWidth={rankForRegion?.tier?.toUpperCase() === 'CHALLENGER' ? 0.2 : 0}
+
                     style={{
                       cursor, opacity, margin: '12px', borderRadius: '50px',
                     }}
@@ -122,6 +134,12 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
               })
 
               }
+
+              {regions.map((region) => {
+                return (
+                  <MapClickOverlay key={region} onClick={(e) => onOverlayClick(e, region)} region={region} />
+                )
+              })}
             </svg>
           </TransformComponent>
         </TransformWrapper>
@@ -131,7 +149,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
 }
 
 const RADIUS_BY_RANK: { [x: string]: number } = {
-  'CHALLENGER': 0.45,
+  'CHALLENGER': 0.40,
   'GRANDMASTER': 0.40,
   'MASTER': 0.4,
 }
@@ -141,6 +159,7 @@ import { RegionBadge } from './lol/RegionBadge';
 import { RankCard } from './lol/RankCard';
 import { PeakAccountCardContent } from './lol/PeakRankAccountCard';
 import { TIER_COLOR_MAP_TW_COLORS, TIER_COLOR_TO_HEX_MAP } from '@/lib/ranks';
+import { MapClickOverlay, NAOverlay, NAOverlayExtended } from './RussiaPolygon';
 
 export const FallBackServerMapAccountCard = ({ region }: { region?: Region | null }) => {
 
