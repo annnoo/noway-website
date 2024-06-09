@@ -13,7 +13,6 @@ const champList = champions.map(it => {
 // copy each file to just the id
 //
 //
-console.log(champList)
 champList.forEach(item => {
   fs.copyFileSync('./champion/' + item.name.replace(' ', '').replace('\'V', 'v').replace('\'G', 'g').replace('.', '')
     .replace('Kai\'Sa', 'Kaisa').replace('\'K', 'K').replace('\'T', 'T').replace('\'R', 'R').replace('\'L', 'L')

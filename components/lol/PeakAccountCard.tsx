@@ -9,7 +9,6 @@ import { TIER_COLOR_MAP_TW_COLORS } from "@/lib/ranks"
 export const PeakAccountCard = ({ account, className, lastGames = [], ...props }: { account: ServerMapAccountState, lastGames?: GameWinChampion[], className?: any }) => {
 
   const borderColor = TIER_COLOR_MAP_TW_COLORS[account.tier.toUpperCase()] ?? undefined
-  console.log(borderColor)
   return (
     <Card className={cn("", className, `border-${borderColor}`, "h-full", "border")} {...props}>
       <CardContent className="grid gap-4">

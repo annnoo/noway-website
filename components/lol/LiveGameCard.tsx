@@ -80,6 +80,7 @@ export type LiveGameTeamsOverviewProps = {
 import { Separator } from "../ui/separator"
 import { cn } from "@/lib/utils";
 import { RegionBadge } from "./RegionBadge";
+import { buildChampUri, buildPerkUri, buildSpellUri } from "@/lib/imagecdn";
 export function LiveGameTeamsOverview({ redTeam, blueTeam }: LiveGameTeamsOverviewProps) {
   return (
     <div>
@@ -129,7 +130,7 @@ export function BannedChampion({ championId }: { championId: number }) {
   return (
     <div className="rounded-lg border-red-600">
       <Image
-        src={`/static/images/champion/${championId}.png`}
+        src={buildChampUri(championId, '32x')}
         alt={championId.toString()}
         width={32}
         height={32}
@@ -148,7 +149,7 @@ export function Participant({ participant, color }: { participant: ParticipantLi
       <div className={cn("flex flex-row justify-evenly items-center  ", "border-l-" + colorClass)}>
         <div className="flex-row flex w-full items-center flex-1">
           <Image
-            src={`/static/images/champion/${participant.championId}.png`}
+            src={buildChampUri(participant.championId, '32x')}
             alt={participant.championId.toString()}
             className="rounded-full m-1 ml-2"
             width={32}
@@ -170,10 +171,12 @@ export function Participant({ participant, color }: { participant: ParticipantLi
   )
 }
 
+
+// TODO: Change to cdn
 export function PerkIcon({ perkId }: { perkId: number }) {
   return (
     <Image
-      src={`/static/images/perks/${perkId}.png`}
+      src={buildPerkUri(perkId, '32x')}
       alt={perkId.toString()}
 
       className="rounded-md"
@@ -187,7 +190,7 @@ export function PerkIcon({ perkId }: { perkId: number }) {
 export function SpellIcon({ perkId }: { perkId: number }) {
   return (
     <Image
-      src={`/static/images/summs/${perkId}.png`}
+      src={buildSpellUri(perkId, '32x')}
       alt={perkId.toString()}
       width={16}
 

@@ -52,8 +52,10 @@ import { FallBackServerMapAccountCard, ServerMapAccountState } from "../ServerMa
 import { Region } from "@/lib/regions";
 import { PeakAccountCardContent } from "./PeakRankAccountCard";
 import { formatTierRank } from "@/lib/ranks";
+import { buildChampUri, buildRankUri } from "@/lib/imagecdn";
 
 export const RankCard = ({ className, peak, account, games, ...props }: RankCardProps) => {
+  const tierImageUrl = buildRankUri(account.tier, '64x');
   return (
     <Card className={cn("", className, "h-full")} {...props}>
       <CardContent className="grid gap-4">
@@ -83,7 +85,7 @@ export const RankCard = ({ className, peak, account, games, ...props }: RankCard
               >
 
                 <Image
-                  src={`/static/images/ranked/${account.tier.toLowerCase()}.png`}
+                  src={tierImageUrl}
                   alt={account.tier}
                   width={72}
                   height={72}
@@ -130,7 +132,7 @@ export const RankCard = ({ className, peak, account, games, ...props }: RankCard
                 {games?.map((game, index) => {
                   const border = game.win ? "border-green-500" : "border-red-500"
                   const classes = cn("w-7", "h-7", "rounded-full", "border-[2px]", border)
-                  const src = `/static/images/champion/${game.champ}.png`
+                  const src = buildChampUri(game.champ, '32x')
                   const key = `${account.accountName}-${account.region}-${game.champ}-${index}`
                   return (
                     <Image src={src} alt={game.champ} width={24} height={24} className={classes} key={key} />

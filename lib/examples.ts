@@ -315,3 +315,10 @@ export const exampleRawGame = {
   "gameLength": 837
 }
 
+
+
+export const exampleGameResponse = {
+  region: 'euw1',
+  gameId: 123456,
+  game: exampleRawGame
+}

@@ -76,7 +76,6 @@ const items = [
     "imagePath": "perk-images/StatMods/StatModsMovementSpeedIcon.png"
   }
 ]
-console.log(items);
 
 // copy each file to just the id
 //

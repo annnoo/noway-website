@@ -5,11 +5,13 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { formatTierRank, isTierApexTier, numberToRoman } from "@/lib/ranks";
 import { RegionBadge } from "./RegionBadge";
+import { buildRankUri } from "@/lib/imagecdn";
 
 
 
 export const PeakAccountCardContent = ({ account, hideTitle, games = [] }: { account: ServerMapAccountState & { accountTag?: string }, hideTitle?: boolean, games?: GameWinChampion[] }) => {
   const formattedDate = format(account.timestamp, 'dd.MM.yyyy HH:mm');
+  const rankUrl = buildRankUri(account.tier, '64x')
   return (
     <div className='h-full'>
 
@@ -31,7 +33,7 @@ export const PeakAccountCardContent = ({ account, hideTitle, games = [] }: { acc
         >
 
           <Image
-            src={`/static/images/ranked/${account.tier.toLowerCase()}.png`}
+            src={rankUrl}
             alt={account.tier}
             width={72}
             height={72}

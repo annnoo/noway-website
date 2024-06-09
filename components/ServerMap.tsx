@@ -32,7 +32,6 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false)
   const [selectedAccount, setSelectedAccount] = useState<ServerMapAccountState | null>(null)
   const [selectedRegion, setSelectedRegion] = useState<Region | null>(null)
-  console.log(props)
 
   return (
     <div className="">
