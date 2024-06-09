@@ -99,7 +99,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                 const color = REGION_COLORS[point?.data?.id as Region] ?? "gray";
                 const rankForRegion = props?.accounts?.[point?.data?.id as Region]
                 // const color = TIER_COLOR_TO_HEX_MAP[rankForRegion?.tier.toUpperCase() as string] ?? '#222'
-                const opacity = rankForRegion ? 1 : 1;
+                const opacity = rankForRegion ? 1 : 0.9;
                 const cursor = point.data ? "pointer" : "default";
 
                 const radius = RADIUS_BY_RANK[rankForRegion?.tier?.toUpperCase() as string] ?? 0.18
@@ -124,7 +124,7 @@ export const ServerMap = (props?: ServerMapAccountProps) => {
                     r={radius}
                     fill={color}
                     stroke="gold"
-                    strokeWidth={rankForRegion?.tier?.toUpperCase() === 'CHALLENGER' ? 0.2 : 0}
+                    strokeWidth={rankForRegion?.tier?.toUpperCase() === 'CHALLENGER' ? 0.18 : 0}
 
                     style={{
                       cursor, opacity, margin: '12px', borderRadius: '50px',
@@ -159,7 +159,7 @@ import { RegionBadge } from './lol/RegionBadge';
 import { RankCard } from './lol/RankCard';
 import { PeakAccountCardContent } from './lol/PeakRankAccountCard';
 import { TIER_COLOR_MAP_TW_COLORS, TIER_COLOR_TO_HEX_MAP } from '@/lib/ranks';
-import { MapClickOverlay, NAOverlay, NAOverlayExtended } from './RussiaPolygon';
+import { MapClickOverlay, NAOverlay } from './RussiaPolygon';
 
 export const FallBackServerMapAccountCard = ({ region }: { region?: Region | null }) => {
 
